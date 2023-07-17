@@ -7,18 +7,24 @@ import Profile from "./Pages/Profile/Profile";
 import Register from "./Pages/Register/Register";
 import Notes from "./Pages/Notes/Notes";
 import Error from "./Pages/Error/Error";
+import NavBr from "./Components/NavBr/NavBr";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/notes" element={<Notes />} />
-        <Route path="/*" element={<Error />} />
-      </Routes>
+      <NavBr />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/*" element={<Error />} />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 }

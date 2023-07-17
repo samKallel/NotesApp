@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Work+Sans:ital,wght@0,100;0,200;0,300;1,100&display=swap');
+
+.mainback{
+    min-height: 100vh;
+    display: flex;
+    padding: 10px 0;
+}
+
+.heading{
+    font-size: 60px;
+    font-family: "Work sans", sans-serif;
+    padding: 5px 10px;
+}
+
+.page{
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px){
+    .heading{
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+    }
+}

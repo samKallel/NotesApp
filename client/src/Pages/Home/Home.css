@@ -1,0 +1,47 @@
+.main{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-image: url('../../Assets/background.png');
+    background-position: center;
+    background-size: cover;
+}
+.title{
+    width: 100%;
+   text-align: center;
+   font-size: 95px;
+    color:blueviolet
+}
+
+.homeButton{
+    width: 150px;
+    height: 55px;
+
+    margin-top: 5%;
+    margin-left: 55%;
+}
+
+@media only screen and (min-width: 1200px)
+{
+    .homeButton{
+        padding: 0 200px;
+
+    }
+    .title{
+        padding: 0 100px;
+    }
+    
+}
+
+@media only screen and (max-width: 768px)
+{
+    .homeButton{
+        width: 150px;
+        height: 50px;
+
+    }
+    .title{
+       font-size: 60px;
+    }
+    
+}
