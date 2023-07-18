@@ -6,6 +6,7 @@ const {
   LOGOUT_USER,
 } = require("../ActionTypes/user");
 
+//initialState
 const initialState = {
   user: null,
   loadUser: false,
@@ -17,10 +18,10 @@ const initialState = {
 const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOAD_USER:
-      return { ...state, loadUser: true, isAuth: true };
+      return { ...state, loadUser: true };
     case SUCC_USER:
       localStorage.setItem("token", payload.token);
-      return { ...state, loadUser: false, user: payload.user, isAuth: true };
+      return { ...state, loadUser: false, user: payload, isAuth: true };
     case CURRENT_USER:
       return { ...state, user: payload, loadUser: false, isAuth: true };
     case LOGOUT_USER:
