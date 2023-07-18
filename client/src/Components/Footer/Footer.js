@@ -6,9 +6,9 @@ const Footer = () => {
     <Container fluid>
       <Row>
         <Col className="text-center py-3">
-          <span style={{ color: "green", margin: "auto" }}>
-            <h7>Lab Phase dans le cadre de la formation JS Full stack chez:</h7>
-          </span>
+          <h6 style={{ color: "green", margin: "auto" }}>
+            Lab Phase dans le cadre de la formation JS Full stack chez:
+          </h6>
         </Col>
         <Col>
           <a href="https://gomycode.com/tn/fr/">

@@ -7,8 +7,10 @@ import {
   Button,
   Container,
 } from "react-bootstrap";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../../JS/Actions/user";
 function NavBr() {
+  const dispatch = useDispatch();
   return (
     <div>
       <Navbar expand="lg" bg="success" variant="dark">
@@ -36,7 +38,9 @@ function NavBr() {
 
               <NavDropdown title="My name" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/">Logout</NavDropdown.Item>
+                <NavDropdown.Item href="/" onClick={() => dispatch(logout())}>
+                  Logout
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

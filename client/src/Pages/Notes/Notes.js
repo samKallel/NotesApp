@@ -12,7 +12,7 @@ function Notes() {
             Create new Note
           </Button>
         </Link>
-        <Accordion defaultActiveKey={["0"]} flush>
+        <Accordion defaultActiveKey={["0"]}>
           <Accordion.Item eventKey="0">
             <Card style={{ margin: 10 }}>
               <Card.Header style={{ display: "flex" }}>

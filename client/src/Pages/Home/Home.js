@@ -7,33 +7,29 @@ function Home() {
     <div className="main">
       <Container>
         <Row>
-          <div>
-            <h1 className="title">Welcome to Notes App</h1>
+          <h1 className="title">Welcome to Notes App</h1>
+
+          <div className="button">
+            <a href="/register">
+              <Button
+                variant="outline-primary"
+                size="lg"
+                className="homeButton"
+              >
+                Register
+              </Button>
+            </a>
+
+            <a href="/login">
+              <Button
+                variant="outline-primary"
+                size="lg"
+                className="homeButton"
+              >
+                Login
+              </Button>
+            </a>
           </div>
-          <Row>
-            <Row>
-              <a href="/register">
-                <Button
-                  variant="outline-primary"
-                  size="lg"
-                  className="homeButton"
-                >
-                  Register
-                </Button>
-              </a>
-            </Row>
-            <Row>
-              <a href="/login">
-                <Button
-                  variant="outline-primary"
-                  size="lg"
-                  className="homeButton"
-                >
-                  Login
-                </Button>
-              </a>
-            </Row>
-          </Row>
         </Row>
       </Container>
     </div>

@@ -10,15 +10,16 @@
     width: 100%;
    text-align: center;
    font-size: 95px;
-    color:blueviolet
+    color:rgba(42, 75, 164, 0.705)
 }
-
+.button{
+    display: flex;
+    justify-content: space-evenly;
+}
 .homeButton{
     width: 150px;
     height: 55px;
-
-    margin-top: 5%;
-    margin-left: 55%;
+ 
 }
 
 @media only screen and (min-width: 1200px)
