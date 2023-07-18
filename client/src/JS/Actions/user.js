@@ -13,10 +13,15 @@ export const register = (newUser) => async (dispatch) => {
     let result = await axios.post("/api/user/register", newUser);
     dispatch({ type: SUCC_USER, payload: result.data });
   } catch (error) {
-    dispatch({
-      type: FAIL_USER,
-      payload: error.response.data.errors,
-    });
+    console.log("Registration Error:", error.message);
+    if (error.response && error.response.data && error.response.data.errors) {
+      dispatch({ type: FAIL_USER, payload: error.response.data.errors });
+    } else {
+      dispatch({
+        type: FAIL_USER,
+        payload: "An error occurred during registration.",
+      });
+    }
   }
 };
 

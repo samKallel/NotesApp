@@ -30,11 +30,11 @@ function Login() {
   return (
     <Forms title="LOGIN">
       <Form>
-        {errors && (
+        {/* {errors && (
           <Errors variant={"warning"}>
             {errors.map((error) => error.msg + "! ")}
           </Errors>
-        )}
+        )} */}
         {loadUser && <Loading />}
         <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
           <Form.Label column sm="2">

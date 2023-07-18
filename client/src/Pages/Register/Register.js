@@ -3,12 +3,13 @@ import Forms from "../../Components/Forms/Forms";
 import Loading from "../../Components/Loading/Loading";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../JS/Actions/user";
 
 function Register() {
   const [newUser, setNewUser] = useState({});
   const [file, setFile] = useState("../../Assets/defaultPic.png");
+  const isAuth = useSelector((state) => state.userReducer.isAuth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,6 +27,11 @@ function Register() {
     data.append("password", newUser.password);
     data.append("image", file);
     dispatch(register(data));
+    if (localStorage.getItem("token") !== "" && isAuth) {
+      navigate("/notes");
+    } else {
+      navigate("/register");
+    }
   };
 
   return (
