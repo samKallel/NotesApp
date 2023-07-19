@@ -1,21 +1,22 @@
 const express = require("express");
 const {
   getAll,
-  getNotes,
+  getNote,
   addNote,
   updateNote,
   deleteNote,
 } = require("../controllers/notes");
 const router = express.Router();
+const isAuth = require("../middlewares/isAuth");
 
 router.get("/test", (req, res) => {
   res.send("TEST");
 });
 
-router.get("/:id", getNotes);
-router.post("/add", addNote);
-router.get("all", getAll);
-router.put("/:id", updateNote);
-router.delete("/:id", deleteNote);
+router.get("/:id", getNote);
+router.post("/add", isAuth, addNote);
+router.get("/all", isAuth, getAll);
+router.put("/:id", isAuth, updateNote);
+router.delete("/:id", isAuth, deleteNote);
 
 module.exports = router;

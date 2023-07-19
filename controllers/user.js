@@ -29,7 +29,7 @@ exports.registerUser = async (req, res) => {
         id: newUser._id,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "24h" }
+      { expiresIn: "1h" }
     );
 
     res

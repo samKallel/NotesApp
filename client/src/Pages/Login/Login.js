@@ -14,27 +14,29 @@ function Login() {
   const isAuth = useSelector((state) => state.userReducer.isAuth);
   const loadUser = useSelector((state) => state.userReducer.loadUser);
   const errors = useSelector((state) => state.userReducer.errors);
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const handleUser = (e) => {
+  const handleUser = async (e) => {
     e.preventDefault();
     dispatch(login(user));
-
-    if (localStorage.getItem("token") !== "" && isAuth) {
-      navigate("/notes");
-    } else {
+    try {
+      (await (localStorage.getItem("token") !== "" && isAuth === true))
+        ? await navigate("/notes")
+        : navigate("/login");
+    } catch (error) {
       navigate("/login");
     }
   };
   return (
     <Forms title="LOGIN">
       <Form>
-        {/* {errors && (
+        {errors && (
           <Errors variant={"warning"}>
             {errors.map((error) => error.msg + "! ")}
           </Errors>
-        )} */}
+        )}
         {loadUser && <Loading />}
         <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
           <Form.Label column sm="2">

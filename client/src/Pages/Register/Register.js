@@ -19,7 +19,7 @@ function Register() {
   const handlePhoto = (e) => {
     setFile(e.target.files[0]);
   };
-  const handleUser = (e) => {
+  const handleUser = async (e) => {
     e.preventDefault();
     let data = new FormData();
     data.append("name", newUser.name);
@@ -27,9 +27,11 @@ function Register() {
     data.append("password", newUser.password);
     data.append("image", file);
     dispatch(register(data));
-    if (localStorage.getItem("token") !== "" && isAuth) {
-      navigate("/notes");
-    } else {
+    try {
+      (await (localStorage.getItem("token") !== "" && isAuth === true))
+        ? navigate("/notes")
+        : navigate("/register");
+    } catch (error) {
       navigate("/register");
     }
   };
