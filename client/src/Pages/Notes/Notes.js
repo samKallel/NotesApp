@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Forms from "../../Components/Forms/Forms";
 import { Link } from "react-router-dom";
 import { Button, Card, Badge, Accordion } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { getNotes } from "../../JS/Actions/notes";
+import { current } from "../../JS/Actions/user";
 
 function Notes() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNotes());
+    dispatch(current());
+  }, [dispatch]);
+
   return (
     <div>
-      <Forms title="Welcome ....">
+      <Forms title="`Welcome ....`">
         <Link to="createNote">
           <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
             Create new Note
           </Button>
         </Link>
+
         <Accordion defaultActiveKey={["0"]}>
           <Accordion.Item eventKey="0">
             <Card style={{ margin: 10 }}>

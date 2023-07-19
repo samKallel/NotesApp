@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Forms from "../../Components/Forms/Forms";
 import Loading from "../../Components/Loading/Loading";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../JS/Actions/user";
+import Errors from "../../Components/Errors/Errors";
+import { current } from "../../JS/Actions/user";
 
 function Register() {
   const [newUser, setNewUser] = useState({});
   const [file, setFile] = useState("../../Assets/defaultPic.png");
   const isAuth = useSelector((state) => state.userReducer.isAuth);
+  const loadUser = useSelector((state) => state.userReducer.loadUser);
+  const errors = useSelector((state) => state.userReducer.errors);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,6 +24,13 @@ function Register() {
   const handlePhoto = (e) => {
     setFile(e.target.files[0]);
   };
+  useEffect(() => {
+    if (localStorage.getItem("token") !== "" && isAuth === true) {
+      navigate("/notes");
+      dispatch(current());
+    } else navigate("/register");
+  }, [localStorage.getItem("token"), dispatch]);
+
   const handleUser = async (e) => {
     e.preventDefault();
     let data = new FormData();
@@ -27,24 +39,17 @@ function Register() {
     data.append("password", newUser.password);
     data.append("image", file);
     dispatch(register(data));
-    try {
-      (await (localStorage.getItem("token") !== "" && isAuth === true))
-        ? navigate("/notes")
-        : navigate("/register");
-    } catch (error) {
-      navigate("/register");
-    }
   };
 
   return (
     <Forms title="REGISTER">
       <Form>
-        {/* {errors && (
+        {errors && (
           <Errors variant={"warning"}>
             {errors.map((error) => error.msg + "! ")}
           </Errors>
-        )} */}
-        {/* {loadUser && <Loading />} */}
+        )}
+        {loadUser && <Loading />}
         <Form.Group as={Row} className="mb-3" controlId="name">
           <Form.Label column sm="2">
             Name

@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import "./Home.css";
-import { useDispatch } from "react-redux";
-// import { current } from "../../JS/Actions/user";
 
 function Home() {
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Forms from "../../Components/Forms/Forms";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,28 +6,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../JS/Actions/user";
 import Loading from "../../Components/Loading/Loading";
 import Errors from "../../Components/Errors/Errors";
-
+import { current } from "../../JS/Actions/user";
 function Login() {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isAuth = useSelector((state) => state.userReducer.isAuth);
   const loadUser = useSelector((state) => state.userReducer.loadUser);
+  const userInfo = useSelector((state) => state.userReducer.user);
   const errors = useSelector((state) => state.userReducer.errors);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    if (localStorage.getItem("token") !== "" && isAuth === true) {
+      // dispatch(current());
+      navigate("/notes");
+    } else navigate("/login");
+  }, [localStorage.getItem("token"), dispatch]);
+
   const handleUser = async (e) => {
     e.preventDefault();
     dispatch(login(user));
-    try {
-      (await (localStorage.getItem("token") !== "" && isAuth === true))
-        ? await navigate("/notes")
-        : navigate("/login");
-    } catch (error) {
-      navigate("/login");
-    }
   };
   return (
     <Forms title="LOGIN">

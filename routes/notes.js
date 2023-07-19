@@ -13,9 +13,9 @@ router.get("/test", (req, res) => {
   res.send("TEST");
 });
 
-router.get("/:id", getNote);
 router.post("/add", isAuth, addNote);
 router.get("/all", isAuth, getAll);
+router.get("/:id", getNote);
 router.put("/:id", isAuth, updateNote);
 router.delete("/:id", isAuth, deleteNote);
 

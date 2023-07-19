@@ -9,17 +9,8 @@ import Notes from "./Pages/Notes/Notes";
 import Error from "./Pages/Error/Error";
 import NavBr from "./Components/NavBr/NavBr";
 import Footer from "./Components/Footer/Footer";
-import { useDispatch } from "react-redux";
-import { current } from "./JS/Actions/user";
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(current());
-    }
-  }, [dispatch]);
-
   return (
     <div className="App">
       <NavBr />
