@@ -25,8 +25,8 @@ export const getNotes = () => async (dispatch, getState) => {
 };
 
 export const addNotes = (newNote) => async (dispatch, getState) => {
+  dispatch({ type: LOAD_NOTE });
   try {
-    dispatch({ type: LOAD_NOTE });
     const {
       userReducer: { user },
     } = getState();

@@ -15,7 +15,8 @@ function CreateNote() {
   const handleChange = (e) => {
     setNewNote({ ...newNote, [e.target.name]: e.target.value });
   };
-  const Add = () => {
+  const addNote = (e) => {
+    e.preventDefault();
     dispatch(addNotes(newNote));
     // navigate("/notes");
   };
@@ -24,7 +25,7 @@ function CreateNote() {
       <Card>
         <Card.Header> Create a new Note</Card.Header>
         <Card.Body>
-          <Form onSubmit={Add}>
+          <Form>
             <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
@@ -58,7 +59,7 @@ function CreateNote() {
               />
             </Form.Group>
 
-            <Button variant="outline-info" className="mx-2" type="submit">
+            <Button variant="outline-info" className="mx-2" onClick={addNote}>
               Create
             </Button>
           </Form>
