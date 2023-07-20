@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../JS/Actions/user";
 import Errors from "../../Components/Errors/Errors";
-import { current } from "../../JS/Actions/user";
 
 function Register() {
   const [newUser, setNewUser] = useState({});
@@ -27,9 +26,11 @@ function Register() {
   useEffect(() => {
     if (localStorage.getItem("token") !== "" && isAuth === true) {
       navigate("/notes");
-      dispatch(current());
     } else navigate("/register");
-  }, [localStorage.getItem("token"), dispatch]);
+  }, [
+    // localStorage.getItem("token"),
+    dispatch,
+  ]);
 
   const handleUser = async (e) => {
     e.preventDefault();

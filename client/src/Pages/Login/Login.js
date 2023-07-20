@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../JS/Actions/user";
 import Loading from "../../Components/Loading/Loading";
 import Errors from "../../Components/Errors/Errors";
-import { current } from "../../JS/Actions/user";
+
 function Login() {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
@@ -14,7 +14,6 @@ function Login() {
 
   const isAuth = useSelector((state) => state.userReducer.isAuth);
   const loadUser = useSelector((state) => state.userReducer.loadUser);
-  const userInfo = useSelector((state) => state.userReducer.user);
   const errors = useSelector((state) => state.userReducer.errors);
 
   const handleChange = (e) => {
@@ -22,7 +21,6 @@ function Login() {
   };
   useEffect(() => {
     if (localStorage.getItem("token") !== "" && isAuth === true) {
-      // dispatch(current());
       navigate("/notes");
     } else navigate("/login");
   }, [localStorage.getItem("token"), dispatch]);

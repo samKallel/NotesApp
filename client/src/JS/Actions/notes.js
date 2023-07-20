@@ -24,10 +24,18 @@ export const getNotes = () => async (dispatch, getState) => {
   }
 };
 
-export const addNotes = (newNote) => async (dispatch) => {
+export const addNotes = (newNote) => async (dispatch, getState) => {
   try {
-    await axios.post("/api/notes/add", newNote);
-    dispatch(getNotes());
+    dispatch({ type: LOAD_NOTE });
+    const {
+      userReducer: { user },
+    } = getState();
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    await axios.post("/api/notes/add", newNote, config);
   } catch (error) {
     dispatch({ type: FAIL_NOTE, payload: error.response });
   }
