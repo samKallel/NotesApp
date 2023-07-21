@@ -13,15 +13,7 @@ export const register = (newUser) => async (dispatch) => {
     let result = await axios.post("/api/user/register", newUser);
     dispatch({ type: SUCC_USER, payload: result.data });
   } catch (error) {
-    console.log("Registration Error:", error.message);
-    if (error.response && error.response.data && error.response.data.errors) {
-      dispatch({ type: FAIL_USER, payload: error.response.data.errors });
-    } else {
-      dispatch({
-        type: FAIL_USER,
-        payload: "An error occurred during registration.",
-      });
-    }
+    dispatch({ type: FAIL_USER, payload: error.response.data.errors });
   }
 };
 
@@ -44,11 +36,29 @@ export const current = () => async (dispatch) => {
       },
     };
     let result = await axios.get("/api/user/current", config);
-    dispatch({ type: SUCC_USER, payload: result.data });
+    dispatch({ type: CURRENT_USER, payload: result.data });
   } catch (error) {
     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
   }
 };
 export const logout = () => async (dispatch) => {
   dispatch({ type: LOGOUT_USER });
+};
+
+export const UpdateProfile = (user) => async (dispatch, getState) => {
+  dispatch({ type: LOAD_USER });
+  try {
+    const {
+      userReducer: { user },
+    } = getState();
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    const { data } = await axios.post("/api/user/profile", user, config);
+    dispatch({ type: SUCC_USER, payload: data });
+  } catch (error) {
+    dispatch({ type: FAIL_USER, payload: error.response.data.errors });
+  }
 };

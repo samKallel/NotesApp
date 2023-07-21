@@ -9,9 +9,9 @@ function CreateNote() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [newNote, setNewNote] = useState({
-    title: "",
-    content: "",
-    category: "",
+    // title: "",
+    // content: "",
+    // category: "",
   });
 
   const handleChange = (e) => {
@@ -19,9 +19,7 @@ function CreateNote() {
   };
   const addNote = (e) => {
     e.preventDefault();
-    const { title, content, category } = newNote;
-    const noteToAdd = { title, content, category };
-    dispatch(addNotes(noteToAdd));
+    dispatch(addNotes(newNote));
     navigate("/notes");
   };
   return (

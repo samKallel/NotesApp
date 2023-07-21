@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import "./Home.css";
-import { current } from "../../JS/Actions/user";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(current());
+    const user = localStorage.getItem("user");
+    if (user) {
+      navigate("/notes");
     }
-  }, [dispatch]);
+  }, [navigate]);
   return (
     <div className="main">
       <Container>

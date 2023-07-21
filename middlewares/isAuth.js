@@ -9,14 +9,12 @@ const isAuth = async (req, res, next) => {
         .status(401)
         .send({ errors: [{ msg: "Not authorized !! no token" }] });
     }
-    const decoded = jwt.verify(token, process.env.SECRET_KEY, {
-      algorithms: ["HS256"],
-    });
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const foundUser = await User.findOne({ _id: decoded.id });
     if (!foundUser) {
       return res
-        .status(401)
-        .send({ errors: [{ msg: "Not authorized !! not not found user" }] });
+        .status(400)
+        .send({ errors: [{ msg: "Not authorized !!  not found user" }] });
     }
     req.user = foundUser;
     next();

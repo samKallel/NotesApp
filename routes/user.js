@@ -27,7 +27,7 @@ router.post(
 );
 router.post("/login", loginValidation(), validation, loginUser);
 router.get("/current", isAuth, (req, res) => {
-  res.send(req.student);
+  res.send(req.user);
 });
 router.post("/profile", isAuth, updateProfile);
 

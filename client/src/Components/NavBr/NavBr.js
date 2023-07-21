@@ -18,7 +18,7 @@ function NavBr({ setSearch }) {
     <div>
       <Navbar expand="lg" bg="success" variant="dark">
         <Container fluid>
-          <Navbar.Brand href="/">Notes App</Navbar.Brand>
+          {!user ? <Navbar.Brand href="/">Notes App</Navbar.Brand> : null}
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="m-auto">
@@ -52,10 +52,15 @@ function NavBr({ setSearch }) {
                   </NavDropdown>
                 </>
               ) : (
-                <Nav>
-                  <Nav.Link href="/login">Login</Nav.Link>
-                </Nav>
-              )}
+                <>
+                  <Nav>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                  </Nav>
+                  <Nav>
+                    <Nav.Link href="/register">Register</Nav.Link>
+                  </Nav>
+                </>
+              )}{" "}
             </Nav>
           </Navbar.Collapse>
         </Container>
