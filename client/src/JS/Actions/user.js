@@ -44,7 +44,7 @@ export const current = () => async (dispatch) => {
       },
     };
     let result = await axios.get("/api/user/current", config);
-    dispatch({ type: CURRENT_USER, payload: result.data });
+    dispatch({ type: SUCC_USER, payload: result.data });
   } catch (error) {
     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
   }

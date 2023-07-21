@@ -24,13 +24,10 @@ function Register() {
     setFile(e.target.files[0]);
   };
   useEffect(() => {
-    if (localStorage.getItem("token") !== "" && isAuth === true) {
+    if (!loadUser && isAuth) {
       navigate("/notes");
-    } else navigate("/register");
-  }, [
-    // localStorage.getItem("token"),
-    dispatch,
-  ]);
+    }
+  }, [isAuth, loadUser, navigate]);
 
   const handleUser = async (e) => {
     e.preventDefault();

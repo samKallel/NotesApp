@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import "./Home.css";
-// import { current } from "../../JS/Actions/user";
-// import { useDispatch } from "react-redux";
+import { current } from "../../JS/Actions/user";
+import { useDispatch, useSelector } from "react-redux";
 
 function Home() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     dispatch(current());
-  //   }
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(current());
+    }
+  }, [dispatch]);
   return (
     <div className="main">
       <Container>

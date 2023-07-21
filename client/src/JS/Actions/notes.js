@@ -3,6 +3,7 @@ import {
   GET_NOTE,
   GET_NOTES,
   LOAD_NOTE,
+  SUCC_NOTES,
 } from "../ActionTypes/notes";
 import axios from "axios";
 
@@ -35,24 +36,26 @@ export const addNotes = (newNote) => async (dispatch, getState) => {
         authorization: localStorage.getItem("token"),
       },
     };
-    await axios.post("/api/notes/add", newNote, config);
+    const data = await axios.post("/api/notes/add", newNote, config);
+    dispatch({ type: SUCC_NOTES, payload: data });
   } catch (error) {
     dispatch({ type: FAIL_NOTE, payload: error.response });
   }
 };
 
-export const deleteNotes = (id) => async (dispatch) => {
+export const editNotes = (id, newNote) => async (dispatch, getState) => {
+  dispatch({ type: LOAD_NOTE });
   try {
-    await axios.delete(`/api/notes/${id}`);
-    dispatch(getNotes());
-  } catch (error) {
-    dispatch({ type: FAIL_NOTE, payload: error.response });
-  }
-};
-export const editNotes = (id, newNote) => async (dispatch) => {
-  try {
-    await axios.put(`/api/notes/${id}`, newNote);
-    dispatch(getNotes());
+    const {
+      userReducer: { user },
+    } = getState();
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    const data = await axios.put(`/api/notes/${id}`, newNote, config);
+    dispatch({ type: SUCC_NOTES, payload: data });
   } catch (error) {
     dispatch({ type: FAIL_NOTE, payload: error.response });
   }
@@ -63,6 +66,24 @@ export const getNote = (id) => async (dispatch) => {
   try {
     let result = await axios(`/api/notes/${id}`);
     dispatch({ type: GET_NOTE, payload: result.data });
+  } catch (error) {
+    dispatch({ type: FAIL_NOTE, payload: error.response });
+  }
+};
+
+export const deleteNotes = (id) => async (dispatch, getState) => {
+  dispatch({ type: LOAD_NOTE });
+  try {
+    const {
+      userReducer: { user },
+    } = getState();
+    const config = {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    };
+    const data = await axios.delete(`/api/notes/${id}`, config); // Ajouter la configuration des en-têtes dans la requête
+    dispatch({ type: SUCC_NOTES, payload: data });
   } catch (error) {
     dispatch({ type: FAIL_NOTE, payload: error.response });
   }

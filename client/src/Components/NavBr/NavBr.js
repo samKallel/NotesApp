@@ -7,9 +7,10 @@ import {
   Button,
   Container,
 } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../JS/Actions/user";
-function NavBr() {
+function NavBr({ setSearch }) {
+  const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   return (
     <div>
@@ -25,6 +26,7 @@ function NavBr() {
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <Button variant="outline-success">Search</Button>
               </Form>
@@ -36,7 +38,7 @@ function NavBr() {
             >
               <Nav.Link href="/notes">Notes</Nav.Link>
 
-              <NavDropdown title="My name" id="navbarScrollingDropdown">
+              <NavDropdown title="{user.name}" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/" onClick={() => dispatch(logout())}>
                   Logout

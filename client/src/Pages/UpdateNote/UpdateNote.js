@@ -1,42 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Forms from "../../Components/Forms/Forms";
 import { Button, Form, Card } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { addNotes } from "../../JS/Actions/notes";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { editNotes } from "../../JS/Actions/notes";
 
-function CreateNote() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [newNote, setNewNote] = useState({
+import Loading from "../../Components/Loading/Loading";
+function UpdateNote() {
+  const [note, setNote] = useState({
     title: "",
     content: "",
     category: "",
   });
+  const navigate = useNavigate();
+  const load = useSelector((state) => state.notesReducer.load);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setNewNote({ ...newNote, [e.target.name]: e.target.value });
+    setNote({ ...note, [e.target.name]: e.target.value });
   };
-  const addNote = (e) => {
+  const { id } = useParams();
+
+  const notesList = useSelector((state) => state.notesReducer.listNotes);
+  const noteToUpdate = notesList.find((note) => note._id === id);
+
+  useEffect(() => {
+    if (noteToUpdate) {
+      setNote({
+        title: noteToUpdate.title,
+        content: noteToUpdate.content,
+        category: noteToUpdate.category,
+      });
+    }
+  }, [noteToUpdate]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { title, content, category } = newNote;
-    const noteToAdd = { title, content, category };
-    dispatch(addNotes(noteToAdd));
+    dispatch(editNotes(id, note));
     navigate("/notes");
   };
   return (
-    <Forms title="Create a Note">
+    <Forms title="Edit Note">
       <Card>
-        <Card.Header> Create a new Note</Card.Header>
+        <Card.Header> Edit this Note</Card.Header>
         <Card.Body>
           <Form>
+            {load && <Loading />}
             <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter the title"
                 name="title"
-                value={newNote.title}
+                value={note.title}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -48,7 +64,7 @@ function CreateNote() {
                 rows={3}
                 placeholder="Enter the content"
                 name="content"
-                value={newNote.content}
+                value={note.content}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -58,22 +74,26 @@ function CreateNote() {
                 type="text"
                 placeholder="Enter the category"
                 name="category"
-                value={newNote.category}
+                value={note.category}
                 onChange={handleChange}
               />
             </Form.Group>
 
-            <Button variant="outline-info" className="mx-2" onClick={addNote}>
-              Create Note
+            <Button
+              variant="outline-info"
+              className="mx-2"
+              onClick={handleSubmit}
+            >
+              Update Note
             </Button>
           </Form>
         </Card.Body>
         <Card.Footer className="text-muted">
-          Create on: <span>{new Date().toLocaleDateString()}</span>
+          Updated on: <span>{new Date().toLocaleDateString()}</span>
         </Card.Footer>
       </Card>
     </Forms>
   );
 }
 
-export default CreateNote;
+export default UpdateNote;

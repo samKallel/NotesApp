@@ -1,25 +1,31 @@
 import React, { useEffect } from "react";
 import Forms from "../../Components/Forms/Forms";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, Badge, Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../../JS/Actions/notes";
-
 import Loading from "../../Components/Loading/Loading";
-import Errors from "../../Components/Errors/Errors";
-// import { current } from "../../JS/Actions/user";
+import { deleteNotes } from "../../JS/Actions/notes";
+import { current } from "../../JS/Actions/user";
 
-function Notes() {
+function Notes({ search }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const listNotes = useSelector((state) => state.notesReducer.listNotes);
   const load = useSelector((state) => state.notesReducer.load);
-  const errors = useSelector((state) => state.notesReducer.errors);
-
   const user = useSelector((state) => state.userReducer.user);
+  const success = useSelector((state) => state.notesReducer.success);
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sur?")) {
+      dispatch(deleteNotes(id));
+    }
+  };
 
   useEffect(() => {
     dispatch(getNotes());
-  }, [dispatch]);
+    // dispatch(current()); // Récupérer les informations de l'utilisateur
+  }, [dispatch, success]);
 
   return (
     <div>
@@ -29,53 +35,62 @@ function Notes() {
             Create new Note
           </Button>
         </Link>
-        {errors && <Errors variant="danger">{errors}</Errors>}
+
         {load && <Loading />}
         {listNotes &&
-          listNotes.map((note) => (
-            <Accordion defaultActiveKey={["0"]}>
-              <Card style={{ margin: 10 }}>
-                <Card.Header style={{ display: "flex" }}>
-                  <span
-                    style={{
-                      color: "black",
-                      textDecoration: "none",
-                      flex: 1,
-                      cursor: "pointer",
-                      alignSelf: "center",
-                      fontSize: 18,
-                    }}
-                  >
-                    <Accordion.Header> {note.title}</Accordion.Header>
-                  </span>
+          listNotes
+            .reverse()
+            .filter((f) => f.title.toLowerCase().includes(search.toLowerCase()))
+            .map((note) => (
+              <Accordion defaultActiveKey={["0"]}>
+                <Card style={{ margin: 10 }}>
+                  <Card.Header style={{ display: "flex" }}>
+                    <span
+                      style={{
+                        color: "black",
+                        textDecoration: "none",
+                        flex: 1,
+                        cursor: "pointer",
+                        alignSelf: "center",
+                        fontSize: 18,
+                      }}
+                    >
+                      <Accordion.Header> {note.title}</Accordion.Header>
+                    </span>
 
-                  <div>
-                    <Button variant="outline-warning">Edit</Button>
-                    <Button variant="outline-danger" className="mx-2">
-                      Delete
-                    </Button>
-                  </div>
-                </Card.Header>
+                    <div>
+                      <Link to={`/notes/${note._id}`}>
+                        <Button variant="outline-warning">Edit</Button>
+                      </Link>
+                      <Button
+                        variant="outline-danger"
+                        className="mx-2"
+                        onClick={() => handleDelete(note._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Card.Header>
 
-                <Card.Body>
-                  <Accordion.Body>
-                    <h4>
-                      <Badge pill bg="success">
-                        Category -{note.category}-
-                      </Badge>
-                    </h4>
-                    <blockquote className="blockquote mb-0">
-                      <p>{note.content}</p>
-                      <footer className="blockquote-footer">
-                        Created On:{" "}
-                        <span>{note.createdAt.substring(0, 10)}</span>
-                      </footer>
-                    </blockquote>
-                  </Accordion.Body>
-                </Card.Body>
-              </Card>
-            </Accordion>
-          ))}
+                  <Card.Body>
+                    <Accordion.Body>
+                      <h4>
+                        <Badge pill bg="success">
+                          Category -{note.category}-
+                        </Badge>
+                      </h4>
+                      <blockquote className="blockquote mb-0">
+                        <p>{note.content}</p>
+                        <footer className="blockquote-footer">
+                          Created On:
+                          <span>{note.createdAt.substring(0, 10)}</span>
+                        </footer>
+                      </blockquote>
+                    </Accordion.Body>
+                  </Card.Body>
+                </Card>
+              </Accordion>
+            ))}
       </Forms>
     </div>
   );

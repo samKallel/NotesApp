@@ -3,12 +3,12 @@ const Notes = require("../models/Notes");
 exports.getAll = async (req, res) => {
   try {
     const notes = await Notes.find({ user: req.user._id });
-    if (!notes) {
-      res.status(404).send({ msg: "Note not found" });
+    if (!notes || notes.length === 0) {
+      return res.status(200).send({ msg: "You have no notes", notes: [] });
     }
     res.status(200).send({ msg: "All your notes", notes });
   } catch (error) {
-    res.status(400).send({ msg: "Fail to get " });
+    res.status(400).send({ msg: "Fail to get notes" });
   }
 };
 
@@ -61,14 +61,16 @@ exports.deleteNote = async (req, res) => {
   try {
     const note = await Notes.findById(req.params.id);
 
-    if (note.user.toString() !== req.user._id.toString()) {
-      return res.status(401).send("You can't do this action");
-    }
     if (note) {
-      const { _id } = req.params;
+      if (note.user.toString() !== req.user._id.toString()) {
+        return res.status(401).send("You can't do this action");
+      }
+
       await Notes.deleteOne({ _id: req.params.id });
 
       res.status(200).send({ msg: "Note deleted successfully..." });
+    } else {
+      res.status(404).send({ msg: "Note not found" });
     }
   } catch (error) {
     res.status(400).send({ msg: "Not deleted!!!" });

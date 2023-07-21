@@ -20,10 +20,10 @@ function Login() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
   useEffect(() => {
-    if (localStorage.getItem("token") !== "" && isAuth === true) {
+    if (!loadUser && isAuth) {
       navigate("/notes");
-    } else navigate("/login");
-  }, [localStorage.getItem("token"), dispatch]);
+    }
+  }, [isAuth, loadUser, navigate]);
 
   const handleUser = async (e) => {
     e.preventDefault();
