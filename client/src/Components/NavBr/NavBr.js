@@ -9,9 +9,11 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../JS/Actions/user";
+
 function NavBr({ setSearch }) {
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
+
   return (
     <div>
       <Navbar expand="lg" bg="success" variant="dark">
@@ -36,14 +38,24 @@ function NavBr({ setSearch }) {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link href="/notes">Notes</Nav.Link>
-
-              <NavDropdown title="{user.name}" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/" onClick={() => dispatch(logout())}>
-                  Logout
-                </NavDropdown.Item>
-              </NavDropdown>
+              {user ? (
+                <>
+                  <Nav.Link href="/notes">Notes</Nav.Link>
+                  <NavDropdown title={user.name} id="navbarScrollingDropdown">
+                    <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                    <NavDropdown.Item
+                      href="/"
+                      onClick={() => dispatch(logout())}
+                    >
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
+              ) : (
+                <Nav>
+                  <Nav.Link href="/login">Login</Nav.Link>
+                </Nav>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

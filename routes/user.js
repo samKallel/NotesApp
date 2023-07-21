@@ -1,5 +1,9 @@
 const express = require("express");
-const { registerUser, loginUser } = require("../controllers/user");
+const {
+  registerUser,
+  loginUser,
+  updateProfile,
+} = require("../controllers/user");
 const upload = require("../util/multer");
 const {
   registerValidation,
@@ -25,5 +29,6 @@ router.post("/login", loginValidation(), validation, loginUser);
 router.get("/current", isAuth, (req, res) => {
   res.send(req.student);
 });
+router.post("/profile", isAuth, updateProfile);
 
 module.exports = router;
