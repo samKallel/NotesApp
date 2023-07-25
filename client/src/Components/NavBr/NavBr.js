@@ -32,10 +32,22 @@ function NavBr({ setSearch }) {
                   style={{ maxHeight: "100px" }}
                   navbarScroll
                 >
-                  <>
-                    <Nav.Link href="/notes">Notes</Nav.Link>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <Nav.Link href="/notes" style={{ margin: "3%" }}>
+                      Notes
+                    </Nav.Link>
+
                     <NavDropdown title={user.name} id="navbarScrollingDropdown">
-                      <NavDropdown.Item href="/profile">
+                      <NavDropdown.Item
+                        href="/profile"
+                        style={{ margin: "3%" }}
+                      >
                         Profile
                       </NavDropdown.Item>
                       <NavDropdown.Item
@@ -45,7 +57,18 @@ function NavBr({ setSearch }) {
                         Logout
                       </NavDropdown.Item>
                     </NavDropdown>
-                  </>
+                    <Nav.Link href="/profile" style={{ margin: "3%" }}>
+                      <img
+                        src={user.image}
+                        alt="ProfilePic"
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </Nav.Link>
+                  </div>
                 </Nav>
               </>
             ) : (

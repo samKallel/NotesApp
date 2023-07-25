@@ -8,7 +8,7 @@ const userSchema = new schema({
   password: { type: String, required: true },
   image: {
     type: String,
-    // default: "../../client/src/Assets/defaultPic.png",
+    default: "../../client/src/Assets/defaultPic.png",
   },
   cloudinary_id: String,
 });

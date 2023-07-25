@@ -74,15 +74,16 @@ module.exports.updateProfile = async (req, res) => {
       return res.status(404).send({ msg: "User not found" });
     }
 
-    // Delete the old image from Cloudinary
+    // Supprimer l'ancienne image de Cloudinary
     if (user.cloudinary_id) {
       await cloudinary.uploader.destroy(user.cloudinary_id);
     }
+
     const file = req.file;
     if (!file) {
       return res.status(400).send({ msg: "No file uploaded" });
     }
-    // Upload new image to Cloudinary
+    // Télécharger la nouvelle image vers Cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
 
     const data = {
@@ -93,10 +94,12 @@ module.exports.updateProfile = async (req, res) => {
     };
 
     if (req.body.password) {
-      user.password = req.body.password;
+      const saltRounds = 10;
+      const hashPassword = await bcrypt.hash(req.body.password, saltRounds);
+      data.password = hashPassword;
     }
 
-    // Update user data
+    // Mettre à jour les données de l'utilisateur
     user.set(data);
     const updateUser = await user.save();
 
