@@ -55,7 +55,7 @@ module.exports.loginUser = async (req, res) => {
         id: foundUser._id,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     res
       .status(200)
@@ -67,50 +67,50 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.updateProfile = async (req, res) => {
   try {
+    // console.log("Request Body:", req.body);
+    // console.log("Request File:", req.file);
     const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(404).send({ msg: "User not found" });
     }
 
-    console.log(user);
+    // Delete the old image from Cloudinary
+    if (user.cloudinary_id) {
+      await cloudinary.uploader.destroy(user.cloudinary_id);
+    }
+    const file = req.file;
+    if (!file) {
+      return res.status(400).send({ msg: "No file uploaded" });
+    }
+    // Upload new image to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
 
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.image = req.body.image || user.image;
-
-    // user.profile_img = result.secure_url || user.profile_img; // Met à jour le champ profile_img
-    // user.cloudinary_id = result.public_id || user.cloudinary_id; // Met à jour le champ cloudinary_id
+    const data = {
+      name: req.body.name || user.name,
+      email: req.body.email || user.email,
+      image: result.secure_url || user.image,
+      cloudinary_id: result.public_id || user.cloudinary_id,
+    };
 
     if (req.body.password) {
       user.password = req.body.password;
     }
 
+    // Update user data
+    user.set(data);
     const updateUser = await user.save();
+
     const token = jwt.sign(
       {
         id: updateUser._id,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     res.status(200).send({ msg: "Profile Updated", updateUser, token });
   } catch (err) {
-    console.error(err);
-    res.status(500).send({ msg: "Internal Server Error" });
+    console.error("Error updating profile:", err);
+    res.status(400).send({ msg: "Failed to update profile" });
   }
 };
-
-// Delete image from cloudinary
-// Upload new image to cloudinary
-//     const data = {
-//       name: req.body.name || user.name,
-//       profile_img: result.secure_url || user.profile_img,
-//       cloudinary_id: result.public_id || user.cloudinary_id,
-//     };
-//     user = await User.findByIdAndUpdate(req.params.id, data, {
-//       new: true,
-//     });
-//     res.status(200).send(user);
-//
-// };

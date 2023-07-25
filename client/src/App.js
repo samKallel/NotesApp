@@ -32,7 +32,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/add" element={<CreateNote />} />
           <Route path="/notes" element={<Notes search={search} />} />
-
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<Register />} />
           <Route path="/notes/:id" element={<UpdateNote />} />

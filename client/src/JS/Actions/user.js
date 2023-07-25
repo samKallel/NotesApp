@@ -45,19 +45,19 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: LOGOUT_USER });
 };
 
-export const UpdateProfile = (user) => async (dispatch, getState) => {
+export const updateProfile = (user) => async (dispatch) => {
   dispatch({ type: LOAD_USER });
   try {
-    const {
-      userReducer: { user },
-    } = getState();
     const config = {
       headers: {
+        "Content-Type": "multipart/form-data",
         authorization: localStorage.getItem("token"),
       },
     };
-    const { data } = await axios.post("/api/user/profile", user, config);
-    dispatch({ type: SUCC_USER, payload: data });
+    // console.log(user);
+    // console.log(config);
+    let result = await axios.put("/api/user/profile", user, config);
+    dispatch({ type: SUCC_USER, payload: result.data });
   } catch (error) {
     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
   }

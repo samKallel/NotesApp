@@ -29,6 +29,6 @@ router.post("/login", loginValidation(), validation, loginUser);
 router.get("/current", isAuth, (req, res) => {
   res.send(req.user);
 });
-router.post("/profile", isAuth, updateProfile);
+router.put("/profile", upload.single("image"), isAuth, updateProfile);
 
 module.exports = router;

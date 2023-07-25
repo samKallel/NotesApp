@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Forms from "../../Components/Forms/Forms";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Card, Badge, Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../../JS/Actions/notes";
@@ -10,22 +10,20 @@ import { current } from "../../JS/Actions/user";
 
 function Notes({ search }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const listNotes = useSelector((state) => state.notesReducer.listNotes);
   const load = useSelector((state) => state.notesReducer.load);
   const user = useSelector((state) => state.userReducer.user);
   const success = useSelector((state) => state.notesReducer.success);
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sur?")) {
+    if (window.confirm("Are you sure to delete this note?")) {
       dispatch(deleteNotes(id));
     }
   };
 
   useEffect(() => {
     dispatch(getNotes());
-    // dispatch(current()); // Récupérer les informations de l'utilisateur
-  }, [dispatch, success]);
+  }, [dispatch, success, user]);
 
   return (
     <div>
