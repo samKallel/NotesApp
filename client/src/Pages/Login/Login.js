@@ -11,7 +11,6 @@ function Login() {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const isAuth = useSelector((state) => state.userReducer.isAuth);
   const loadUser = useSelector((state) => state.userReducer.loadUser);
   const errors = useSelector((state) => state.userReducer.errors);

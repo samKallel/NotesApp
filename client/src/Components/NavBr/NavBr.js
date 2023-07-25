@@ -39,14 +39,14 @@ function NavBr({ setSearch }) {
                       alignItems: "baseline",
                     }}
                   >
-                    <Nav.Link href="/notes" style={{ margin: "3%" }}>
+                    <Nav.Link href="/notes" style={{ margin: "5%" }}>
                       Notes
                     </Nav.Link>
 
                     <NavDropdown title={user.name} id="navbarScrollingDropdown">
                       <NavDropdown.Item
                         href="/profile"
-                        style={{ margin: "3%" }}
+                        style={{ margin: "5%" }}
                       >
                         Profile
                       </NavDropdown.Item>
@@ -57,7 +57,7 @@ function NavBr({ setSearch }) {
                         Logout
                       </NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link href="/profile" style={{ margin: "3%" }}>
+                    <Nav.Link href="/profile" style={{ margin: "5%" }}>
                       <img
                         src={user.image}
                         alt="ProfilePic"

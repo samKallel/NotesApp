@@ -1,10 +1,11 @@
 import React from "react";
+import Forms from "../../Components/Forms/Forms";
 
 function Error() {
   return (
-    <div>
-      <h1>Errors</h1>
-    </div>
+    <Forms title="SORRY...">
+      <a href="/">Go Home!!!!</a>
+    </Forms>
   );
 }
 

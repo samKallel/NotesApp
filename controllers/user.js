@@ -29,7 +29,7 @@ exports.registerUser = async (req, res) => {
         id: newUser._id,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "2h" }
     );
 
     res
@@ -55,7 +55,7 @@ module.exports.loginUser = async (req, res) => {
         id: foundUser._id,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "24h" }
+      { expiresIn: "2h" }
     );
     res
       .status(200)
@@ -108,7 +108,7 @@ module.exports.updateProfile = async (req, res) => {
         id: updateUser._id,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "24h" }
+      { expiresIn: "2h" }
     );
 
     res.status(200).send({ msg: "Profile Updated", updateUser, token });

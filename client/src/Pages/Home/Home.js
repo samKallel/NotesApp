@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import "./Home.css";
-
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
+    if (localStorage.getItem("token")) {
       navigate("/notes");
     }
   }, [navigate]);
