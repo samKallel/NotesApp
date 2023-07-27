@@ -7,9 +7,7 @@ app.use(express.json());
 
 const connectDB = require("./config/connectDB");
 connectDB();
-app.get("/", (req, res) => {
-  res.send("hello");
-});
+
 app.use("/api/user", require("./routes/user"));
 app.use("/api/notes", require("./routes/notes"));
 

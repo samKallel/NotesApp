@@ -11,6 +11,7 @@ const userSchema = new schema({
     default: "../../client/src/Assets/defaultPic.png",
   },
   cloudinary_id: String,
+  isAdmin: { type: Boolean, default: false },
 });
 
 module.exports = User = mongoose.model("user", userSchema);

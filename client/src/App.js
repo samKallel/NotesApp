@@ -13,6 +13,7 @@ import { current } from "./JS/Actions/user";
 import CreateNote from "./Pages/CreateNote/CreateNote";
 import UpdateNote from "./Pages/UpdateNote/UpdateNote";
 import Profile from "./Pages/Profile/Profile";
+
 function App() {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");

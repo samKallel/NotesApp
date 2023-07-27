@@ -117,3 +117,27 @@ module.exports.updateProfile = async (req, res) => {
     res.status(400).send({ msg: "Failed to update profile" });
   }
 };
+
+module.exports.getUsers = async (req, res) => {
+  try {
+    const listUsers = await User.find();
+    if (!listUsers || listUsers.length === 0) {
+      return res.status(200).send({ msg: "You have no notes", listUsers: [] });
+    }
+    res.status(200).send({ msg: "liste de tous les users", listUsers });
+  } catch (error) {
+    res.status(400).send({ msg: "Failed to update profile" });
+  }
+};
+
+module.exports.delUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      await User.deleteOne({ _id: req.params.id });
+      res.status(200).send({ msg: "User deleted successfully...", user });
+    } else res.status(400).send({ msg: "User not found" });
+  } catch (error) {
+    res.status(400).send({ msg: "User deleted!!!" });
+  }
+};

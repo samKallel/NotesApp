@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const isAuth = async (req, res, next) => {
+const isAdmin = async (req, res, next) => {
   try {
     const token = req.headers["authorization"];
     if (!token) {
@@ -17,11 +17,19 @@ const isAuth = async (req, res, next) => {
         .status(400)
         .send({ errors: [{ msg: "Not authorized !!  not found user" }] });
     }
+
+    // Vérifie si l'utilisateur est un administrateur (isAdmin: true)
+    if (!foundUser.isAdmin) {
+      return res
+        .status(401)
+        .send({ errors: [{ msg: "Not authorized !! not Admin" }] });
+    }
+
     req.user = foundUser;
     next();
   } catch (error) {
-    res.status(401).send({ errors: [{ msg: "Not authorized !!3" }] });
+    res.status(401).send({ errors: [{ msg: "Not authorized !!" }] });
   }
 };
 
-module.exports = isAuth;
+module.exports = isAdmin;

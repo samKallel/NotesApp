@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   CURRENT_USER,
   FAIL_USER,
+  GET_USERS,
   LOAD_USER,
   LOGOUT_USER,
   SUCC_USER,
@@ -62,3 +63,13 @@ export const updateProfile = (user) => async (dispatch) => {
     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
   }
 };
+
+// export const listUser = () => async (dispatch) => {
+//   dispatch({ type: LOAD_USER });
+//   try {
+//     let list = await axios.get("/api/user/allUsers");
+//     dispatch({ type: GET_USERS, payload: list.data });
+//   } catch (error) {
+//     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
+//   }
+// };

@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import Forms from "../../Components/Forms/Forms";
 import { Button, Form, Card } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNotes } from "../../JS/Actions/notes";
 import { useNavigate } from "react-router-dom";
+import Errors from "../../Components/Errors/Errors";
 
 function CreateNote() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [newNote, setNewNote] = useState({
-    // title: "",
-    // content: "",
-    // category: "",
-  });
+  const [newNote, setNewNote] = useState({});
+  const errors = useSelector((state) => state.notesReducer.errors);
 
   const handleChange = (e) => {
     setNewNote({ ...newNote, [e.target.name]: e.target.value });

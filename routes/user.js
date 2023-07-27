@@ -3,6 +3,8 @@ const {
   registerUser,
   loginUser,
   updateProfile,
+  getUsers,
+  delUser,
 } = require("../controllers/user");
 const upload = require("../util/multer");
 const {
@@ -12,12 +14,9 @@ const {
 } = require("../middlewares/validator");
 
 const isAuth = require("../middlewares/isAuth");
-
+const isAdmin = require("../middlewares/isAdmin");
 const router = express.Router();
 
-// router.post("/test", (req, res) => {
-//   res.send("BONJOUR");
-// });
 router.post(
   "/register",
   upload.single("image"),
@@ -30,5 +29,7 @@ router.get("/current", isAuth, (req, res) => {
   res.send(req.user);
 });
 router.put("/profile", upload.single("image"), isAuth, updateProfile);
+router.get("/allUsers", isAdmin, getUsers);
+router.delete("/:id", isAdmin, delUser);
 
 module.exports = router;
