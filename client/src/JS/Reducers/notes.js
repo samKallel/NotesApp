@@ -19,7 +19,7 @@ const notesReducer = (state = initialState, { type, payload }) => {
     case LOAD_NOTE:
       return { ...state, load: true };
     case GET_NOTES:
-      return { ...state, listNotes: payload.notes, load: false };
+      return { ...state, listNotes: payload.notes, load: false, success: true };
     case FAIL_NOTE:
       return { ...state, load: false, errors: payload, success: false };
     case GET_NOTE:
