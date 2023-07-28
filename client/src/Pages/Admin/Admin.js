@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function Admin() {
   const [showUsers, setShowUsers] = useState(false);
-  const load = useSelector((state) => state.userReducer.loadUser);
+
   const listUsers = useSelector((state) => state.userReducer.listUsers);
   const dispatch = useDispatch();
 
@@ -50,16 +50,18 @@ function Admin() {
                     <Accordion.Header>{user.name} </Accordion.Header>
                   </span>
 
-                  <div>
-                    <Button
-                      variant="outline-danger"
-                      className="mx-2"
-                      onClick={() => handleDelete(user._id)}
-                    >
-                      {console.log(user._id)}
-                      Delete
-                    </Button>
-                  </div>
+                  {!user.isAdmin && (
+                    <div>
+                      <Button
+                        variant="outline-danger"
+                        className="mx-2"
+                        onClick={() => handleDelete(user._id)}
+                      >
+                        {console.log(user._id)}
+                        Delete
+                      </Button>
+                    </div>
+                  )}
                 </Card.Header>
 
                 <Card.Body>
