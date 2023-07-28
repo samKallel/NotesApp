@@ -2,7 +2,7 @@ import React from "react";
 import { Nav, NavDropdown, Navbar, Form, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../JS/Actions/user";
-import logo from "../../Assets/ico.jpg";
+import logo from "../../Assets/ico.webp";
 function NavBr({ setSearch }) {
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
@@ -16,9 +16,9 @@ function NavBr({ setSearch }) {
               <img
                 src={logo}
                 alt="logo"
-                style={{ width: "60px", height: "60px" }}
+                style={{ width: "80px", height: "80px", borderRadius: "50%" }}
               />{" "}
-              Notes App{" "}
+              {/* Notes App{" "} */}
             </Navbar.Brand>
           ) : null}
           <Navbar.Toggle aria-controls="navbarScroll" />{" "}
@@ -83,13 +83,15 @@ function NavBr({ setSearch }) {
             ) : (
               <Nav
                 className="me-auto my-2 my-lg-0"
-                style={{ maxHeight: "100px" }}
+                style={{
+                  maxHeight: "100px",
+                }}
                 navbarScroll
               >
-                <>
+                <div>
                   <Nav.Link href="/login">Login</Nav.Link>
                   <Nav.Link href="/register">Register</Nav.Link>
-                </>
+                </div>
               </Nav>
             )}
           </Navbar.Collapse>

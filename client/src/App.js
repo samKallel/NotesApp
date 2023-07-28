@@ -13,6 +13,7 @@ import { current } from "./JS/Actions/user";
 import CreateNote from "./Pages/CreateNote/CreateNote";
 import UpdateNote from "./Pages/UpdateNote/UpdateNote";
 import Profile from "./Pages/Profile/Profile";
+import Admin from "./Pages/Admin/Admin";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<Register />} />
           <Route path="/notes/:id" element={<UpdateNote />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/*" element={<Error />} />
         </Routes>
       </main>

@@ -22,7 +22,15 @@ export const login = (user) => async (dispatch) => {
   dispatch({ type: LOAD_USER });
   try {
     let result = await axios.post("/api/user/login", user);
-    dispatch({ type: SUCC_USER, payload: result.data });
+
+    dispatch({
+      type: SUCC_USER,
+      payload: {
+        token: result.data.token,
+        user: result.data.user,
+        isAdmin: result.data.user.isAdmin, // Vérifiez que la propriété isAdmin est correctement transmise
+      },
+    });
   } catch (error) {
     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
   }
@@ -64,12 +72,12 @@ export const updateProfile = (user) => async (dispatch) => {
   }
 };
 
-// export const listUser = () => async (dispatch) => {
-//   dispatch({ type: LOAD_USER });
-//   try {
-//     let list = await axios.get("/api/user/allUsers");
-//     dispatch({ type: GET_USERS, payload: list.data });
-//   } catch (error) {
-//     dispatch({ type: FAIL_USER, payload: error.response.data.errors });
-//   }
-// };
+export const Users = () => async (dispatch) => {
+  dispatch({ type: LOAD_USER });
+  try {
+    let list = await axios.get("/api/user/allUsers");
+    dispatch({ type: GET_USERS, payload: list.data });
+  } catch (error) {
+    dispatch({ type: FAIL_USER, payload: error.response.data.errors });
+  }
+};

@@ -4,7 +4,8 @@ const {
   FAIL_USER,
   CURRENT_USER,
   LOGOUT_USER,
-  // GET_USERS,
+  LOGIN_ADMIN,
+  GET_USERS,
 } = require("../ActionTypes/user");
 
 //initialState
@@ -14,6 +15,7 @@ const initialState = {
   loadUser: false,
   errors: [],
   isAuth: false,
+  isAdmin: false,
 };
 
 // pure function
@@ -23,7 +25,13 @@ const userReducer = (state = initialState, { type, payload }) => {
       return { ...state, loadUser: true };
     case SUCC_USER:
       localStorage.setItem("token", payload.token);
-      return { ...state, loadUser: false, user: payload.user, isAuth: true };
+      return {
+        ...state,
+        loadUser: false,
+        user: payload.user,
+        isAuth: true,
+        isAdmin: payload.isAdmin,
+      };
     case CURRENT_USER:
       return {
         ...state,
@@ -37,6 +45,8 @@ const userReducer = (state = initialState, { type, payload }) => {
     case FAIL_USER:
       return { ...state, loadUser: false, errors: payload };
 
+    case GET_USERS:
+      return { ...state, loadUser: false, listUsers: payload.listUsers };
     default:
       return state;
   }
