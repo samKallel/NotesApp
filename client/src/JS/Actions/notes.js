@@ -82,7 +82,7 @@ export const deleteNotes = (id) => async (dispatch, getState) => {
         authorization: localStorage.getItem("token"),
       },
     };
-    const data = await axios.delete(`/api/notes/${id}`, config); // Ajouter la configuration des en-têtes dans la requête
+    const data = await axios.delete(`/api/notes/${id}`, config);
     dispatch({ type: SUCC_NOTES, payload: data });
   } catch (error) {
     dispatch({ type: FAIL_NOTE, payload: error.response });

@@ -4,8 +4,8 @@ const {
   FAIL_USER,
   CURRENT_USER,
   LOGOUT_USER,
-  LOGIN_ADMIN,
   GET_USERS,
+  DELETE_USER,
 } = require("../ActionTypes/user");
 
 //initialState
@@ -38,6 +38,7 @@ const userReducer = (state = initialState, { type, payload }) => {
         user: payload,
         loadUser: false,
         isAuth: true,
+        isAdmin: payload.isAdmin,
       };
     case LOGOUT_USER:
       localStorage.removeItem("token");
@@ -46,7 +47,20 @@ const userReducer = (state = initialState, { type, payload }) => {
       return { ...state, loadUser: false, errors: payload };
 
     case GET_USERS:
-      return { ...state, loadUser: false, listUsers: payload.listUsers };
+      return {
+        ...state,
+        loadUser: false,
+        listUsers: payload.listUsers,
+      };
+    case DELETE_USER:
+      const updatedListUsers = state.listUsers.filter(
+        (user) => user._id !== payload
+      );
+      return {
+        ...state,
+        loadUser: false,
+        listUsers: updatedListUsers,
+      };
     default:
       return state;
   }

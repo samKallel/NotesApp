@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../../JS/Actions/notes";
 import Loading from "../../Components/Loading/Loading";
 import { deleteNotes } from "../../JS/Actions/notes";
-import { current } from "../../JS/Actions/user";
 
 function Notes({ search }) {
   const dispatch = useDispatch();
@@ -14,6 +13,7 @@ function Notes({ search }) {
   const load = useSelector((state) => state.notesReducer.load);
   const user = useSelector((state) => state.userReducer.user);
   const success = useSelector((state) => state.notesReducer.success);
+  const isAdmin = useSelector((state) => state.userReducer.isAdmin);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure to delete this note?")) {
@@ -31,9 +31,25 @@ function Notes({ search }) {
         <Link to="/add">
           <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
             Create new Note
-          </Button>
+          </Button>{" "}
         </Link>
-
+        {isAdmin && (
+          <Link to="/admin">
+            <Button
+              id="adminButton"
+              variant="success"
+              size="lg"
+              style={{
+                marginLeft: "60%",
+                marginTop: "0%",
+                marginBottom: "5%",
+                position: "absolute",
+              }}
+            >
+              Space Admin
+            </Button>
+          </Link>
+        )}
         {load && <Loading />}
         {listNotes &&
           listNotes

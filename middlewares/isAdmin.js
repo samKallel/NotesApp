@@ -7,7 +7,7 @@ const isAdmin = async (req, res, next) => {
     if (!token) {
       return res
         .status(401)
-        .send({ errors: [{ msg: "Not authorized !! no token" }] });
+        .send({ errors: [{ msg: "Not authorized !! no token1232" }] });
     }
 
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
