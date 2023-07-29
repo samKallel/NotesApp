@@ -33,63 +33,63 @@ function Admin() {
 
         {showUsers &&
           listUsers &&
-          listUsers.map((user) => (
-            <Accordion defaultActiveKey={["0"]}>
-              <Card style={{ margin: 10 }}>
-                <Card.Header style={{ display: "flex" }}>
-                  <span
-                    style={{
-                      color: "black",
-                      textDecoration: "none",
-                      flex: 1,
-                      cursor: "pointer",
-                      alignSelf: "center",
-                      fontSize: 18,
-                    }}
-                  >
-                    <Accordion.Header>{user.name} </Accordion.Header>
-                  </span>
+          listUsers
+            .filter((user) => user.name !== "admin")
+            .reverse()
+            .map((user) => (
+              <Accordion defaultActiveKey={["0"]}>
+                <Card style={{ margin: 10 }}>
+                  <Card.Header style={{ display: "flex" }}>
+                    <span
+                      style={{
+                        color: "black",
+                        textDecoration: "none",
+                        flex: 1,
+                        cursor: "pointer",
+                        alignSelf: "center",
+                        fontSize: 18,
+                      }}
+                    >
+                      <Accordion.Header>{user.name} </Accordion.Header>
+                    </span>
 
-                  {!user.isAdmin && (
                     <div>
                       <Button
                         variant="outline-danger"
                         className="mx-2"
                         onClick={() => handleDelete(user._id)}
                       >
-                        {console.log(user._id)}
                         Delete
                       </Button>
                     </div>
-                  )}
-                </Card.Header>
+                  </Card.Header>
 
-                <Card.Body>
-                  <Accordion.Body>
-                    <h4>
-                      <Badge pill></Badge>
-                    </h4>
-                    <blockquote className="blockquote mb-0">
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {" "}
-                        <p>{user.email}</p>
-                        <img
-                          src={user.image}
-                          alt="ProfilePic"
-                          style={{ width: "70px", height: "70px" }}
-                        />
-                      </div>
-                    </blockquote>
-                  </Accordion.Body>
-                </Card.Body>
-              </Card>
-            </Accordion>
-          ))}
+                  <Card.Body>
+                    <Accordion.Body>
+                      <h4>
+                        <Badge pill></Badge>
+                      </h4>
+                      <blockquote className="blockquote mb-0">
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {" "}
+                          <p>{user.email}</p>
+                          <img
+                            src={user.image}
+                            alt="ProfilePic"
+                            style={{ width: "70px", height: "70px" }}
+                          />
+                        </div>
+                      </blockquote>
+                    </Accordion.Body>
+                  </Card.Body>
+                </Card>
+              </Accordion>
+            ))}
       </Forms>
     </div>
   );
