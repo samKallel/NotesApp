@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNotes } from "../../JS/Actions/notes";
 import Loading from "../../Components/Loading/Loading";
 import { deleteNotes } from "../../JS/Actions/notes";
-import { toast } from "react-toastify";
 
 function Notes({ search }) {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ function Notes({ search }) {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure to delete this note?")) {
       dispatch(deleteNotes(id));
-      toast.success("Notes delete Successfully ...", { theme: "dark" });
     }
   };
 
