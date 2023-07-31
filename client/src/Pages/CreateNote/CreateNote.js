@@ -4,14 +4,15 @@ import { Button, Form, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotes } from "../../JS/Actions/notes";
 import { useNavigate } from "react-router-dom";
-import Errors from "../../Components/Errors/Errors";
+import Loading from "../../Components/Loading/Loading";
 
 function CreateNote() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [newNote, setNewNote] = useState({});
-  const errors = useSelector((state) => state.notesReducer.errors);
-
+  const load = useSelector((state) => state.notesReducer.load);
+  const success = useSelector((state) => state.notesReducer.success);
+  console.log(success);
   const handleChange = (e) => {
     setNewNote({ ...newNote, [e.target.name]: e.target.value });
   };
@@ -22,6 +23,7 @@ function CreateNote() {
   };
   return (
     <Forms title="Create a Note">
+      {load && <Loading />}
       <Card>
         <Card.Header> Create a new Note</Card.Header>
         <Card.Body>

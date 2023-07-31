@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Forms from "../../Components/Forms/Forms";
 import { Button, Accordion, Card, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Components/Loading/Loading";
 import { Users, deleteUser } from "../../JS/Actions/user";
-import { Link } from "react-router-dom";
 
 function Admin() {
   const [showUsers, setShowUsers] = useState(false);
-
   const listUsers = useSelector((state) => state.userReducer.listUsers);
+  const loadUser = useSelector((state) => state.userReducer.loadUser);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,8 +18,9 @@ function Admin() {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure to delete this user?")) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       dispatch(deleteUser(id));
+      toast.success("Deleted successfully!!!", { theme: "dark" });
     }
   };
   const handleShowUsers = () => {
@@ -31,6 +33,7 @@ function Admin() {
           {showUsers ? "Hide Users" : "Show Users"}
         </Button>
 
+        {loadUser && <Loading />}
         {showUsers &&
           listUsers &&
           listUsers
@@ -53,15 +56,18 @@ function Admin() {
                       <Accordion.Header>{user.name} </Accordion.Header>
                     </span>
 
-                    <div>
-                      <Button
-                        variant="outline-danger"
-                        className="mx-2"
-                        onClick={() => handleDelete(user._id)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
+                    {!user.isAdmin && (
+                      <div>
+                        <Button
+                          variant="outline-danger"
+                          className="mx-2"
+                          onClick={() => handleDelete(user._id)}
+                        >
+                          {console.log(user._id)}
+                          Delete
+                        </Button>
+                      </div>
+                    )}
                   </Card.Header>
 
                   <Card.Body>

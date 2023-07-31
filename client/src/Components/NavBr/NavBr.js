@@ -22,7 +22,7 @@ function NavBr({ setSearch }) {
     <div>
       <Navbar key="md" md="md" bg="success" variant="dark">
         <Container fluid>
-          {user ? (
+          {user && (
             <div className="d-flex align-items-center">
               <Nav.Link href="/profile" style={{ margin: "5%" }}>
                 <img
@@ -47,12 +47,18 @@ function NavBr({ setSearch }) {
                 <NavDropdown.Item href="/profile" style={{ margin: "5%" }}>
                   Profile
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/" onClick={() => dispatch(logout())}>
+                <NavDropdown.Item
+                  href="/"
+                  onClick={() => {
+                    dispatch(logout());
+                  }}
+                >
                   Logout
                 </NavDropdown.Item>
               </NavDropdown>
             </div>
-          ) : (
+          )}
+          {!user && (
             <Nav className="me-auto my-2 my-lg-0" navbarScroll>
               <div>
                 <Navbar.Brand href="/">Notes App</Navbar.Brand>
@@ -68,19 +74,20 @@ function NavBr({ setSearch }) {
                   />
                 </Nav.Link>
               </div>
+
+              <div
+                style={{
+                  color: "white",
+                }}
+              >
+                <Nav.Link href="/login" style={{ marginLeft: "900px" }}>
+                  Login
+                </Nav.Link>
+                <Nav.Link href="/register" style={{ marginLeft: "900px" }}>
+                  Register
+                </Nav.Link>
+              </div>
             </Nav>
-          )}
-          {!user && (
-            <div
-              style={{
-                color: "white",
-              }}
-            >
-              <Nav.Link href="/login" style={{ margin: "20px" }}>
-                Login
-              </Nav.Link>
-              <Nav.Link href="/register">Register</Nav.Link>
-            </div>
           )}
           {isNotesPage && (
             <Nav className="m-auto">

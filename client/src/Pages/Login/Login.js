@@ -14,8 +14,9 @@ function Login() {
   const isAuth = useSelector((state) => state.userReducer.isAuth);
   const loadUser = useSelector((state) => state.userReducer.loadUser);
   const errors = useSelector((state) => state.userReducer.errors);
+
   const isAdmin = useSelector((state) => state.userReducer.isAdmin);
-  // console.log(isAdmin);
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };

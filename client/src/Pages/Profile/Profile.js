@@ -13,6 +13,7 @@ function Profile() {
   const [image, setImage] = useState("");
 
   const user = useSelector((state) => state.userReducer.user);
+  const loadUser = useSelector((state) => state.userReducer.loadUser);
   // console.log(user);
   useEffect(() => {
     if (user) {
@@ -27,11 +28,6 @@ function Profile() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // console.log("name:", name);
-    // console.log("email:", email);
-    // console.log("password:", password);
-    // console.log("image:", image);
-
     const data = new FormData();
     data.append("name", name);
     data.append("email", email);
@@ -46,6 +42,7 @@ function Profile() {
   }
   return (
     <Forms title="PROFILE">
+      {loadUser && <Loading />}
       <div>
         <Row className="ProfileContainer">
           <Col md={6}>

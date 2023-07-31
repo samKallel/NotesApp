@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Flip, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+
 import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
@@ -23,7 +26,7 @@ function App() {
       dispatch(current());
     }
   }, [dispatch]);
-  console.log(search);
+
   return (
     <div className="App">
       <NavBr setSearch={setSearch} />
@@ -43,6 +46,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <ToastContainer transition={Flip} />
     </div>
   );
 }
