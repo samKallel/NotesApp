@@ -1,12 +1,12 @@
-const {
-  LOAD_USER,
-  SUCC_USER,
-  FAIL_USER,
+import {
   CURRENT_USER,
-  LOGOUT_USER,
-  GET_USERS,
   DELETE_USER,
-} = require("../ActionTypes/user");
+  FAIL_USER,
+  GET_USERS,
+  LOAD_USER,
+  LOGOUT_USER,
+  SUCC_USER,
+} from "../ActionTypes/user";
 
 //initialState
 const initialState = {
